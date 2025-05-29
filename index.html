@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>کتابخانه دانشجو</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <style>
     body { font-family: Tahoma; background: #1e1e1e; color: #fff; padding-bottom: 60px; }
     .hidden { display: none; }
@@ -22,10 +23,146 @@
       
     }
   </style>
-  
+ 
 </head>
 <body>
 
+  <script>
+    // مقداردهی اولیه Supabase
+    const SUPABASE_URL = 'https://faxlpfcijlwhkegrfklx.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZheGxwZmNpamx3aGtlZ3Jma2x4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg0NDcwMTgsImV4cCI6MjA2NDAyMzAxOH0.3ib6mVs-vpwGRC5iNSTpzn1fcM5tFHFb0HcxALshuJg';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // افزودن کتاب جدید
+    async function addBook(title, description, fileUrl) {
+      const { data, error } = await supabase
+        .from('books')
+        .insert([{ title, description, file_url: fileUrl }]);
+      if (error) {
+        console.error('خطا در افزودن کتاب:', error);
+      } else {
+        console.log('کتاب با موفقیت افزوده شد:', data);
+      }
+    }
+
+    // دریافت لیست کتاب‌ها
+    async function getBooks() {
+      const { data, error } = await supabase
+        .from('books')
+        .select('*');
+      if (error) {
+        console.error('خطا در دریافت کتاب‌ها:', error);
+      } else {
+        console.log('لیست کتاب‌ها:', data);
+      }
+    }
+
+    // حذف کتاب بر اساس ID
+    async function deleteBook(id) {
+      const { data, error } = await supabase
+        .from('books')
+        .delete()
+        .eq('id', id);
+      if (error) {
+        console.error('خطا در حذف کتاب:', error);
+      } else {
+        console.log('کتاب با موفقیت حذف شد:', data);
+      }
+    }
+
+    // افزودن گروه مطالعاتی جدید
+    async function addStudyGroup(title, link) {
+      const { data, error } = await supabase
+        .from('study_groups')
+        .insert([{ title, link }]);
+      if (error) {
+        console.error('خطا در افزودن گروه مطالعاتی:', error);
+      } else {
+        console.log('گروه مطالعاتی با موفقیت افزوده شد:', data);
+      }
+    }
+
+    // دریافت لیست گروه‌های مطالعاتی
+    async function getStudyGroups() {
+      const { data, error } = await supabase
+        .from('study_groups')
+        .select('*');
+      if (error) {
+        console.error('خطا در دریافت گروه‌های مطالعاتی:', error);
+      } else {
+        console.log('لیست گروه‌های مطالعاتی:', data);
+      }
+    }
+
+    // حذف گروه مطالعاتی بر اساس ID
+    async function deleteStudyGroup(id) {
+      const { data, error } = await supabase
+        .from('study_groups')
+        .delete()
+        .eq('id', id);
+      if (error) {
+        console.error('خطا در حذف گروه مطالعاتی:', error);
+      } else {
+        console.log('گروه مطالعاتی با موفقیت حذف شد:', data);
+      }
+    }
+
+    // افزودن استاد جدید
+    async function addTeacher(name, phone) {
+      const { data, error } = await supabase
+        .from('teachers')
+        .insert([{ name, phone }]);
+      if (error) {
+        console.error('خطا در افزودن استاد:', error);
+      } else {
+        console.log('استاد با موفقیت افزوده شد:', data);
+      }
+    }
+
+    // دریافت لیست اساتید
+    async function getTeachers() {
+      const { data, error } = await supabase
+        .from('teachers')
+        .select('*');
+      if (error) {
+        console.error('خطا در دریافت اساتید:', error);
+      } else {
+        console.log('لیست اساتید:', data);
+      }
+    }
+
+    // حذف استاد بر اساس ID
+    async function deleteTeacher(id) {
+      const { data, error } = await supabase
+        .from('teachers')
+        .delete()
+        .eq('id', id);
+      if (error) {
+        console.error('خطا در حذف استاد:', error);
+      } else {
+        console.log('استاد با موفقیت حذف شد:', data);
+      }
+    }
+
+    // نمونه استفاده از توابع
+    // افزودن کتاب نمونه
+    addBook('عنوان کتاب نمونه', 'توضیحات کتاب نمونه', 'https://example.com/book.pdf');
+
+    // دریافت لیست کتاب‌ها
+    getBooks();
+
+    // افزودن گروه مطالعاتی نمونه
+    addStudyGroup('گروه نمونه', 'https://example.com/group');
+
+    // دریافت لیست گروه‌های مطالعاتی
+    getStudyGroups();
+
+    // افزودن استاد نمونه
+    addTeacher('نام استاد نمونه', '09123456789');
+
+    // دریافت لیست اساتید
+    getTeachers();
+  </script>
 
 <div id="mainMenu" class="box">
   <h2>کتابخانه دانشجو</h2>
@@ -92,9 +229,9 @@
   <button onclick="backToMenu()">بازگشت</button>
 </div>
 
-<!-- لیست شماره اساتید -->
+<!-- لیست اساتید -->
 <div id="teachersPanel" class="box hidden">
-  <h3>لیست شماره اساتید</h3>
+  <h3>لیست اساتید</h3>
   <input type="text" id="teacherSearch" oninput="renderTeachers()" placeholder="جستجوی استاد...">
   <div id="teacherList"></div>
   <button onclick="backToMenu()">بازگشت</button>
@@ -294,10 +431,9 @@ document.getElementById("btnLogin").onclick = showLogin; document.getElementById
       bgMusic.play().catch(e => console.log("پخش صدا مسدود شد:", e));
     }
   }, { once: true });
+  
 </script>
-
 </script>
-
 <footer style="position: fixed; bottom: 0; right: 0; left: 0; background: rgba(0, 0, 0, 0.7); color: #fff; text-align: center; padding: 10px; font-size: 14px; z-index: 999;"> طراحی و توسعه توسط <strong>یوسف نادری</strong> | ارتباط در <a href="https://eitaa.com/yousef_naderi" target="_blank" style="color: #ffd700; text-decoration: none;"> <img src="https://i.postimg.cc/GmfbBLHp/eitaa-orange.png" alt="Eitaa" style="vertical-align: middle; width: 20px; height: 20px; margin-left: 5px;"> ایتا </a>
  </footer> 
  <audio id="bgMusic" autoplay loop>
