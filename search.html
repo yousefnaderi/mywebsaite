@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>📚 جستجوی کتاب</title>
+  <style>
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background-image: url('search.jpeg');
+      background-size: cover;
+      text-align: center;
+      padding: 20px;
+      direction: rtl;
+    }
+
+    h1 {
+      color: red;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 80%;
+      max-width: 400px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: green;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: darkgreen;
+    }
+
+    .book-result {
+      background-color: #ffffffcc;
+      margin: 10px auto;
+      padding: 15px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 500px;
+      text-align: right;
+      box-shadow: 0 0 10px #3333;
+    }
+
+    .back-btn {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔍 جستجوی کتاب</h1>
+
+  <input type="text" id="searchInput" placeholder="عنوان کتاب را وارد کنید">
+  <br>
+  <button onclick="searchBooks()">جستجو</button>
+
+  <div id="results"></div>
+
+  <script>
+    // نمونه لیست کتاب‌ها (در آینده به دیتابیس متصل میشه)
+    
+
+    function searchBooks() {
+      const keyword = document.getElementById('searchInput').value.trim();
+      const resultDiv = document.getElementById('results');
+      resultDiv.innerHTML = '';
+
+      const filtered = books.filter(book => book.title.includes(keyword));
+
+      if (filtered.length === 0) {
+        resultDiv.innerHTML = '<p style="color:white;">کتابی یافت نشد!</p>';
+      } else {
+        filtered.forEach(book => {
+          resultDiv.innerHTML += `
+            <div class="book-result">
+              <h3>📘 ${book.title}</h3>
+              <p>${book.desc}</p>
+              <a href="${book.file}" target="_blank">📥 مشاهده / دانلود</a>
+            </div>
+          `;
+        });
+      }
+    }
+  </script>
+
+</body>
+
+
+
+  <button class="back-btn" onclick="location.href='home.html'">⬅️ بازگشت به پنل کاربر</button>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>چت دانشجویی 💬</title>
+  <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
+  <style>
+    body {
+      background-color: #f9f9e9;
+      font-family: 'Vazir', sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    #chatBox {
+      width: 95%;
+      height: 400px;
+      border: 1px solid #ccc;
+      margin: auto;
+      padding: 10px;
+      overflow-y: auto;
+      background-color: #fff;
+      border-radius: 12px;
+      text-align: right;
+    }
+    .message {
+      margin-bottom: 10px;
+      background: #f0f0f0;
+      padding: 8px;
+      border-radius: 8px;
+    }
+    .sender {
+      font-size: 14px;
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 4px;
+    }
+    #userInput {
+      width: 70%;
+      padding: 8px;
+      margin: 10px 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      border-radius: 10px;
+      background-color: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #005f00;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>💬 چت دانشجویی</h2>
+  <div id="chatBox"></div>
+
+  <div>
+    <input type="text" id="userInput" placeholder="پیام خود را بنویسید...">
+    <button onclick="sendMessage()">📤 ارسال</button>
+  </div>
+
+  <br>
+  <button onclick="goBack()">⬅️ بازگشت به پنل کاربر</button>
+
+  <script>
+    // مقدارهای Backendless خودت را جایگزین کن
+    const APP_ID = "93CB70EA-40F8-4703-B62D-5FBFF505D41D";
+    const API_KEY = "44133445-8A73-4E4C-9F63-42FC7C29F102";
+    Backendless.initApp(APP_ID, API_KEY);
+
+    const sender = localStorage.getItem("username");
+
+    if (!sender) {
+      alert("نام کاربری پیدا نشد. لطفاً ابتدا وارد شوید.");
+      window.location.href = "login.html"; // صفحه ورود
+    }
+
+    function sendMessage() {
+      const text = document.getElementById("userInput").value.trim();
+      if (text !== "") {
+        Backendless.Data.of("ChatMessages").save({ text, sender })
+          .then(() => {
+            document.getElementById("userInput").value = "";
+            loadMessages();
+          })
+          .catch(console.error);
+      } else {
+        alert("لطفاً پیامی بنویسید.");
+      }
+    }
+
+    function loadMessages() {
+      Backendless.Data.of("ChatMessages").find({ sortBy: ["created DESC"], pageSize: 50 })
+        .then(messages => {
+          const box = document.getElementById("chatBox");
+          box.innerHTML = "";
+          messages.reverse().forEach(msg => {
+            const msgDiv = document.createElement("div");
+            msgDiv.className = "message";
+            msgDiv.innerHTML = `<div class="sender">${msg.sender}</div>${msg.text}`;
+            box.appendChild(msgDiv);
+          });
+          box.scrollTop = box.scrollHeight;
+        })
+        .catch(console.error);
+    }
+
+    function goBack() {
+      window.location.href = "user-panel.html"; // آدرس پنل کاربر
+    }
+
+    loadMessages();
+    setInterval(loadMessages, 4000);
+  </script>
+
+</body>
+</html>

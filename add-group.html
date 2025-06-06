@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>افزودن گروه درسی</title>
+  <style>
+    body {
+      background: url('G1.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Vazir', sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+    input, button {
+      width: 80%;
+      padding: 12px;
+      margin: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #00cc66;
+      color: black;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #00994d;
+    }
+  </style>
+</head>
+<body>
+  <h2>📘 افزودن گروه درسی</h2>
+  <input type="text" placeholder="نام گروه" id="groupName">
+  <input type="text" placeholder="لینک گروه" id="groupLink">
+  <button onclick="addGroup()">افزودن</button>
+
+  <script>
+    function addGroup() {
+      const name = document.getElementById('groupName').value;
+      const link = document.getElementById('groupLink').value;
+      if (name && link) {
+        alert("گروه '" + name + "' با لینک: " + link + " ثبت شد.");
+        // در مرحله بعد، ارسال به پایگاه داده
+      } else {
+        alert("لطفاً نام و لینک گروه را وارد کنید.");
+      }
+    }
+  </script>
+</body>
+
+<button onclick="location.href='admin.html'" style="
+  background-color: green;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+">
+بازگشت 🔙
+</button>
+
+</html>

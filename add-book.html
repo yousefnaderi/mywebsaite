@@ -1,0 +1,109 @@
+<h2 style="text-align: center; font-family: 'Tahoma'; color: #333;">📚 افزودن کتاب جدید</h2>
+ <style>
+    body {
+      background: url('B1.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Vazir', sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    </style>
+<div style="
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffffcc;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-family: 'Tahoma', sans-serif;
+">
+
+  <label style="font-weight: bold; color: #333;">عنوان کتاب:</label>
+  <input type="text" id="bookTitle" placeholder=" عنوان کتاب" style="
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  ">
+
+  <label style="font-weight: bold; color: #333;">توضیح کتاب:</label>
+  <textarea id="bookDesc" rows="4" placeholder="توضیحات درصورت نیاز" style="
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: vertical;
+  "></textarea>
+
+  <label style="font-weight: bold; color: #333;">فایل کتاب (PDF یا عکس):</label>
+  <input type="file" id="bookFile" style="
+    margin: 8px 0 20px;
+    width: 100%;
+  ">
+
+  <button onclick="uploadBook()" style="
+    background-color: #4CAF50;
+    color: black;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: 0.3s;
+  ">📤 ارسال کتاب</button>
+
+</div>
+
+  <p id="successMessage" style="
+    display: none;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #dff0d8;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+    border-radius: 8px;
+    text-align: center;
+  ">✅ کتاب با موفقیت افزوده شد.</p>
+
+</div>
+
+<script>
+  function uploadBook() {
+    const title = document.getElementById('bookTitle').value.trim();
+    const desc = document.getElementById('bookDesc').value.trim();
+    const file = document.getElementById('bookFile').files[0];
+
+    if (title && desc && file) {
+      // در اینجا باید کد آپلود به Backendless یا هر پایگاه داده‌ای که استفاده می‌کنی اضافه شود
+
+      // شبیه‌سازی موفقیت:
+      setTimeout(() => {
+        document.getElementById('successMessage').style.display = 'block';
+
+        // پاک‌سازی فرم پس از ارسال موفق:
+        document.getElementById('bookTitle').value = '';
+        document.getElementById('bookDesc').value = '';
+        document.getElementById('bookFile').value = '';
+      }, 1000);
+    } else {
+      alert('لطفاً تمام فیلدها را کامل کنید.');
+    }
+  }
+  
+</script>
+
+<button onclick="location.href='admin.html'" style="
+  background-color: green;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+">
+   بازگشت 🔙
+</button>
